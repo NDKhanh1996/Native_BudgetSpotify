@@ -1,7 +1,7 @@
-import {HomeNavbar} from "../components/homePage/HomeNavbar";
-import {CategoriesButton} from "../components/homePage/CategoriesButton";
+import {HomeNavbar} from "../components/homeScreen/HomeNavbar";
+import {CategoriesButton} from "../components/homeScreen/CategoriesButton";
 import {View, Text} from "react-native";
-import {RecommendPlaylistButton} from "../components/homePage/RecommendPlaylistButton";
+import {RecommendPlaylistButton} from "../components/homeScreen/RecommendPlaylistButton";
 
 export function Home() {
     return (

@@ -1,11 +1,10 @@
-import {Text, View, StyleSheet} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import {Text, View} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 
 export function HomeNavbar() {
     return(
-        <View style={statusBarHeight.container} className="justify-end h-20 pl-2.5">
+        <View className="justify-end h-20 pl-2.5">
             <View className="flex-row">
                 <Text className="text-white text-3xl">
                     Hello User
@@ -19,9 +18,3 @@ export function HomeNavbar() {
         </View>
     );
 }
-
-const statusBarHeight = StyleSheet.create({
-    container: {
-        marginTop: StatusBar.currentHeight || 28
-    },
-});

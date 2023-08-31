@@ -1,8 +1,11 @@
 import {View, Text} from "react-native";
-import {AuthButton} from "../components/authPage/AuthButton";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {AuthButton} from "../../components/authScreens/mainAuth/AuthButton";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";;
 
-export function Auth() {
+export function MainAuth({ navigation }) {
+    const handleLoginPress = () => {
+        navigation.navigate('Home');
+    };
     return (
             <View className="flex-1 justify-center items-center">
                 <View className="flex-[0.5] justify-center">
@@ -24,7 +27,7 @@ export function Auth() {
                         <AuthButton title="Continue with google" bgColor='#000000' border={1} borderColor='#FFFFFF' icon={true}/>
                     </View>
                     <View>
-                        <AuthButton title="Login"/>
+                        <AuthButton title="Login" />
                     </View>
                 </View>
             </View>

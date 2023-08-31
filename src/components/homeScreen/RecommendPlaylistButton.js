@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity} from "react-native";
 
 export function RecommendPlaylistButton(props) {
     return(
