@@ -1,8 +1,8 @@
 import {View, Text} from "react-native";
-import {AuthButton} from "../../components/authScreens/mainAuth/AuthButton";
+import {AuthButton} from "../../components/authScreens/auth/AuthButton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";;
 
-export function MainAuth({ navigation }) {
+export function Main({ navigation }) {
     const handleLoginPress = () => {
         navigation.navigate('Home');
     };

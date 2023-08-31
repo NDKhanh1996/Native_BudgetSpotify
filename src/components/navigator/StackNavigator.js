@@ -1,4 +1,4 @@
-import {MainAuth} from "../../screens/auth/MainAuth";
+import {Main} from "../../screens/auth/Main";
 import {Home} from "../../screens/Home";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -12,7 +12,7 @@ export function StackNavigator() {
                 backgroundColor: "#121212"
             }
         }}>
-            <Stack.Screen name="Auth" component={MainAuth}/>
+            <Stack.Screen name="Auth" component={Main}/>
             <Stack.Screen name="Home" component={Home}/>
         </Stack.Navigator>
     );
