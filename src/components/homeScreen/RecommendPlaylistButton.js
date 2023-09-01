@@ -1,8 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
 
 export function RecommendPlaylistButton(props) {
-    return(
-        <TouchableOpacity style={[styles.button, { borderRadius: 5 }]}>
+    return (
+        <TouchableOpacity style={[styles.button, {borderRadius: 5}]}>
             <Text style={styles.buttonText}>{props.title} </Text>
         </TouchableOpacity>
     );

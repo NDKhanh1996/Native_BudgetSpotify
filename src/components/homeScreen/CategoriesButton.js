@@ -1,8 +1,8 @@
 import {TouchableOpacity, StyleSheet, Text} from "react-native";
 
 export function CategoriesButton(props) {
-    return(
-        <TouchableOpacity style={[styles.button, { borderRadius: 500 }]}>
+    return (
+        <TouchableOpacity style={[styles.button, {borderRadius: 500}]}>
             <Text style={styles.buttonText}>{props.title}</Text>
         </TouchableOpacity>
     );

@@ -3,7 +3,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 
 export function HomeNavbar() {
-    return(
+    return (
         <View className="justify-end h-20 pl-2.5">
             <View className="flex-row">
                 <Text className="text-white text-3xl">
