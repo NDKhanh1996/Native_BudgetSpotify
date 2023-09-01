@@ -1,8 +1,11 @@
 import {View, Text} from "react-native";
-import {AuthButton} from "../../components/authScreens/auth/AuthButton";
+import {AuthButton} from "../../components/authScreens/main/AuthButton";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";;
 
 export function Main({ navigation }) {
+    const handleSignupPress = () => {
+        navigation.navigate('Signup');
+    };
     const handleLoginPress = () => {
         navigation.navigate('Home');
     };
@@ -21,13 +24,13 @@ export function Main({ navigation }) {
                 </View>
                 <View className="space-y-2 mb-20 flex-[0.3] justify-end ">
                     <View>
-                        <AuthButton title="Signup free now" bgColor="#68E066" textColor="black"/>
+                        <AuthButton title="Signup free now" bgColor="#68E066" textColor="black" onPress={handleSignupPress}/>
                     </View>
                     <View>
                         <AuthButton title="Continue with google" bgColor='#000000' border={1} borderColor='#FFFFFF' icon={true}/>
                     </View>
                     <View>
-                        <AuthButton title="Login" />
+                        <AuthButton title="Login"/>
                     </View>
                 </View>
             </View>
