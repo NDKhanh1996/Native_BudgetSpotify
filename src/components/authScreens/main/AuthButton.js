@@ -32,8 +32,7 @@ export function AuthButton(props) {
                 <View>
                     <Text style={styles.buttonText}>{props.title}</Text>
                 </View>
-            )
-            }
+            )}
         </TouchableOpacity>
     );
 }

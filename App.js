@@ -1,11 +1,11 @@
-import {StatusBar} from 'expo-status-bar';
 import {NavigationContainer} from "@react-navigation/native";
 import {StackNavigator} from "./src/navigator/StackNavigator";
+import {StatusBar} from 'react-native';
 
 export default function App() {
     return (
         <NavigationContainer>
-            <StatusBar style="inverted"/>
+            <StatusBar/>
             <StackNavigator/>
         </NavigationContainer>
     );
