@@ -2,6 +2,7 @@ import {AuthMain} from "../screens/auth/AuthMain";
 import {Home} from "../screens/Home";
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Signup} from "../screens/auth/Signup";
+import {Login} from "../screens/auth/Login";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export function StackNavigator() {
             <Stack.Screen name="AuthMain" component={AuthMain} options={{headerShown: false}}/>
             <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
             <Stack.Screen name="Signup" component={Signup}/>
+            <Stack.Screen name="Login" component={Login}/>
         </Stack.Navigator>
     );
 }

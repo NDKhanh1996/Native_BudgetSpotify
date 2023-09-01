@@ -18,7 +18,7 @@ export function AuthButton(props) {
     });
 
     return (
-        <TouchableOpacity style={[styles.button, {borderRadius: 120}]} className="w-80 md:w-96" onPress={props.onPress}>
+        <TouchableOpacity style={[styles.button, {borderRadius: 120}]} onPress={props.onPress}>
             {props.icon ? (
                 <View className="flex-row">
                     <View>
