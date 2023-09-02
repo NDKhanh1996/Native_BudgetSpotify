@@ -6,7 +6,7 @@ export class AuthService {
         return await axios.post(API_URL + "/auth/login", values);
     }
 
-    static async googleLogin(token) {
-        return await axios.post(API_URL + "/auth/google-login", {token});
+    static async googleLogin(values) {
+        return await axios.post(API_URL + "/auth/google-login", {token: values});
     }
 }
