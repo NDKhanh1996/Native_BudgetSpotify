@@ -1,6 +1,7 @@
 import {View, Text, TextInput} from "react-native";
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {AuthButton} from "../../components/authScreens/AuthButton";
+import {PasswordInput} from "../../components/authScreens/PasswordInput";
 
 export function Signup() {
     return (
@@ -15,16 +16,13 @@ export function Signup() {
                         placeholder="Input your name"
                         placeholderTextColor="white"
                     />
-                    <TextInput
-                        style={inputStyle}
-                        placeholder="Input your password"
-                        placeholderTextColor="white"
-                    />
-                    <TextInput
-                        style={inputStyle}
-                        placeholder="Confirm password"
-                        placeholderTextColor="white"
-                    />
+                    <View>
+                        <PasswordInput placeholderValue="Input your password"/>
+                    </View>
+                    <View>
+                        <PasswordInput placeholderValue="Confirm password"/>
+                    </View>
+
                 </View>
                 <View className="mt-5 w-64 md:w-96">
                     <AuthButton title="Signup" bgColor='#68E066'/>
