@@ -15,6 +15,7 @@ export function Login({navigation}) {
             await AuthService.jwtLogin({username, password});
             navigation.navigate("Home");
         } catch (e) {
+            console.log(e)
             setWrongInfo(true);
         }
     }
