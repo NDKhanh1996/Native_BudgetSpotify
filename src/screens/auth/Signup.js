@@ -22,7 +22,6 @@ export function Signup() {
                     <View>
                         <PasswordInput placeholderValue="Confirm password"/>
                     </View>
-
                 </View>
                 <View className="mt-5 w-64 md:w-96">
                     <AuthButton title="Signup" bgColor='#68E066'/>

@@ -1,13 +1,14 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import {AuthService} from "../auth.service";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
     async (config) => {
-        let accessToken = localStorage.getItem('token');
-        let refreshToken = localStorage.getItem('refreshToken');
+        let accessToken = await AsyncStorage.getItem('token');
+        let refreshToken = await AsyncStorage.getItem('refreshToken');
 
         if (accessToken) {
             const decodedToken = jwtDecode(accessToken);
@@ -15,12 +16,12 @@ axiosInstance.interceptors.request.use(
 
             if (decodedToken.exp < now) {
                 const tokens = await AuthService.reqRefreshToken(accessToken, refreshToken);
-                await localStorage.setItem("token", tokens.data.accessToken);
-                await localStorage.setItem("refreshToken", tokens.data.refreshToken);
+                await AsyncStorage.setItem("token", tokens.data.accessToken);
+                await AsyncStorage.setItem("refreshToken", tokens.data.refreshToken);
             }
         }
 
-        accessToken = localStorage.getItem('token');
+        accessToken = AsyncStorage.getItem('token');
 
         if (accessToken) {
             config.headers.token = `Bearer ${accessToken}`;
