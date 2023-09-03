@@ -14,7 +14,7 @@ export function Login({navigation}) {
     const handleLogin = async () => {
         try {
             const response = await AuthService.jwtLogin({username, password});
-            navigation.navigate("Home");
+            navigation.navigate("TabNavigator");
             await AsyncStorage.setItem("token", response.data.accessToken);
             await AsyncStorage.setItem("refreshToken", response.data.refreshToken);
             const userObject = response.data.user;
