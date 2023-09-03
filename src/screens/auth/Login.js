@@ -4,6 +4,7 @@ import {AuthButton} from "../../components/authScreens/AuthButton";
 import {useState} from "react";
 import {PasswordInput} from "../../components/authScreens/PasswordInput";
 import {AuthService} from "../../services/auth.service";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export function Login({navigation}) {
     const [wrongInfo, setWrongInfo] = useState(false);
@@ -12,8 +13,13 @@ export function Login({navigation}) {
 
     const handleLogin = async () => {
         try {
-            await AuthService.jwtLogin({username, password});
+            const response = await AuthService.jwtLogin({username, password});
             navigation.navigate("Home");
+            await AsyncStorage.setItem("token", response.data.accessToken);
+            await AsyncStorage.setItem("refreshToken", response.data.refreshToken);
+            const userObject = response.data.user;
+            const userString = JSON.stringify(userObject);
+            await AsyncStorage.setItem("userLogin", userString);
         } catch (e) {
             console.log(e)
             setWrongInfo(true);

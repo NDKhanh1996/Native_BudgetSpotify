@@ -21,7 +21,7 @@ export function AuthButton(props) {
         <TouchableOpacity style={[styles.button, {borderRadius: 120}]} onPress={props.onPress}>
             {props.icon ? (
                 <View className="flex-row">
-                    <View>
+                    <View className="absolute">
                         <AntDesign name="google" size={20} color="white"/>
                     </View>
                     <View className="flex-1 items-center">
