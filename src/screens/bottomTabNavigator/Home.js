@@ -1,9 +1,24 @@
-import {HomeNavbar} from "../components/homeScreen/HomeNavbar";
-import {CategoriesButton} from "../components/homeScreen/CategoriesButton";
+import {HomeNavbar} from "../../components/tabNavigatorScreens/homeScreen/HomeNavbar";
+import {CategoriesButton} from "../../components/tabNavigatorScreens/homeScreen/CategoriesButton";
 import {View, Text} from "react-native";
-import {RecommendPlaylistButton} from "../components/homeScreen/RecommendPlaylistButton";
+import {RecommendPlaylistButton} from "../../components/tabNavigatorScreens/homeScreen/RecommendPlaylistButton";
+import image from '../../../assets/img/likedPlaylistImg.jpg';
+import {useEffect, useState} from "react";
+import UserService from "../../services/user.service";
 
 export function Home() {
+    const [yourPlaylist, setYourPlaylist] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setYourPlaylist(await UserService.getPlaylist());
+            } catch (e) {
+                console.log(e.message);
+            }
+        })();
+    }, []);
+
     return (
         <View className="flex-1">
             <HomeNavbar/>
@@ -17,7 +32,7 @@ export function Home() {
             </View>
             <View className="flex-row space-x-5 ml-3 mt-7">
                 <View>
-                    <RecommendPlaylistButton title="Liked songs"/>
+                    <RecommendPlaylistButton title="Liked songs" img={image}/>
                 </View>
                 <View className="hidden sm:flex">
                     <RecommendPlaylistButton title="Your newest playlist"/>

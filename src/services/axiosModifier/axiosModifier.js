@@ -13,7 +13,6 @@ axiosInstance.interceptors.request.use(
         if (accessToken) {
             const decodedToken = jwtDecode(accessToken);
             const now = Date.now() / 1000;
-
             if (decodedToken.exp < now) {
                 const tokens = await AuthService.reqRefreshToken(accessToken, refreshToken);
                 await AsyncStorage.setItem("token", tokens.data.accessToken);
@@ -21,8 +20,7 @@ axiosInstance.interceptors.request.use(
             }
         }
 
-        accessToken = AsyncStorage.getItem('token');
-
+        accessToken = await AsyncStorage.getItem('token');
         if (accessToken) {
             config.headers.token = `Bearer ${accessToken}`;
         }
