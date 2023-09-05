@@ -1,12 +1,12 @@
-import {StatusBar} from 'expo-status-bar';
-import {View} from 'react-native';
-import {Home} from "./src/pages/Home";
+import {NavigationContainer} from "@react-navigation/native";
+import {StackNavigator} from "./src/navigator/StackNavigator";
+import {StatusBar} from 'react-native';
 
 export default function App() {
     return (
-        <View className="flex-1" style={{backgroundColor: "#121212"}}>
-            <StatusBar style="inverted"/>
-            <Home/>
-        </View>
+        <NavigationContainer>
+            <StatusBar/>
+            <StackNavigator/>
+        </NavigationContainer>
     );
 }
