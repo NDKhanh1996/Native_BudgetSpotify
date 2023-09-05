@@ -30,6 +30,10 @@ class SongService {
     static async getAllTags() {
         return await axios.get(API_URL + 'song/tags');
     }
+
+    static async getAllPlaylistPublic(){
+        return await axios.get(API_URL + 'song/playlists');
+    }
 }
 
 export default SongService;

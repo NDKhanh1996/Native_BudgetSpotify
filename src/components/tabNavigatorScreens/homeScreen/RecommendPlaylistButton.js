@@ -4,7 +4,7 @@ export function RecommendPlaylistButton(props) {
     return (
         <TouchableOpacity style={styles.button}>
             {props.img && (
-                <Image source={props.img} style={styles.image}></Image>
+                <Image source={props.img} style={styles.image} />
             )}
             <Text style={styles.buttonText}>{props.title} </Text>
         </TouchableOpacity>
@@ -21,13 +21,15 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderRadius: 5,
     },
-    buttonText: {
-        color: 'white',
-        margin: 10
-    },
     image: {
         width: 50,
         height: 50,
         resizeMode: "contain",
-    }
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+    },
+    buttonText: {
+        color: 'white',
+        margin: 10
+    },
 });
