@@ -1,6 +1,6 @@
 import {HomeNavbar} from "../../components/tabNavigatorScreens/homeScreen/HomeNavbar";
 import {CategoriesButton} from "../../components/tabNavigatorScreens/homeScreen/CategoriesButton";
-import {SafeAreaView, ScrollView, Text, View} from "react-native";
+import {ScrollView, Text, View} from "react-native";
 import {RecommendPlaylistButton} from "../../components/tabNavigatorScreens/homeScreen/RecommendPlaylistButton";
 import {useEffect, useState} from "react";
 import UserService from "../../services/user.service";
@@ -9,36 +9,24 @@ import {PlaylistCard} from "../../components/tabNavigatorScreens/homeScreen/Play
 
 export function Home() {
     const [yourPlaylist, setYourPlaylist] = useState([]);
+    const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([]);
     const [allPublicPlaylist, setAllPublicPlaylist] = useState([]);
-    const [bestPlaylist, setBestPlaylist] = useState(null);
-    const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([])
 
     const getAllPublicPlaylist = async () => {
         const responseAllPlaylistPublic = await SongService.getAllPlaylistPublic();
         const allPlaylistPublicData = responseAllPlaylistPublic.data["allPlaylistPublic"];
+
         if (allPlaylistPublicData) {
             setAllPublicPlaylist(allPlaylistPublicData);
         }
+
         return allPlaylistPublicData;
     }
 
-    const getBestPlaylist = (allPlaylistPublicData) => {
-        let bestPlaylistVar = null;
-        for (let i = 0; i < allPlaylistPublicData.length; i++) {
-            const playlist = allPlaylistPublicData[i];
-
-            if (!bestPlaylistVar || playlist["playlistLikeCounts"].length > bestPlaylistVar["playlistLikeCounts"].length) {
-                bestPlaylistVar = playlist;
-            }
-        }
-
-        if (bestPlaylistVar) {
-            setBestPlaylist(bestPlaylistVar)
-        }
-    }
-    
     const sortLikeDescendPlaylist = (allPlaylistPublicData) => {
-        return allPlaylistPublicData.sort((a, b) => {
+        const copyOfPlaylistData = [...allPlaylistPublicData];
+
+        return copyOfPlaylistData.sort((a, b) => {
             return b["playlistLikeCounts"].length - a["playlistLikeCounts"].length;
         });
     }
@@ -51,8 +39,6 @@ export function Home() {
 
                 const allPlaylistPublicData = await getAllPublicPlaylist();
 
-                getBestPlaylist(allPlaylistPublicData);
-
                 const sortedPlaylist = sortLikeDescendPlaylist(allPlaylistPublicData);
                 setSortLikeDescendPlaylistArr(sortedPlaylist);
             } catch (e) {
@@ -60,7 +46,6 @@ export function Home() {
             }
         })();
     }, []);
-    console.log(sortLikeDescendPlaylistArr)
 
     return (
         <View className="flex-1 pl-3">
@@ -88,45 +73,53 @@ export function Home() {
                         />
                     </View>
                 )}
-                {bestPlaylist !== null && (
+                {sortLikeDescendPlaylistArr.length > 0 && (
                     <View>
                         <RecommendPlaylistButton
                             title="Best playlist"
-                            img={{uri: bestPlaylist["avatar"]}}
+                            img={{uri: sortLikeDescendPlaylistArr[0]["avatar"]}}
                         />
                     </View>
                 )}
             </View>
-            <View className="flex space-y-8 mt-8">
+            <ScrollView className="flex space-y-8 mt-8">
                 <Text className="text-white text-3xl">
                     Your Playlist
                 </Text>
-                <SafeAreaView>
-                    <ScrollView horizontal={true} className="pl-0">
-                        {allPublicPlaylist.map(publicPlaylist => (
-                            <PlaylistCard
-                                avatar={{uri: publicPlaylist["avatar"]}}
-                                name={publicPlaylist["playlistName"]}
-                                key={publicPlaylist["_id"]}
-                            />
-                        ))}
-                    </ScrollView>
-                </SafeAreaView>
+                <ScrollView horizontal={true} className="pl-0">
+                    {yourPlaylist.map(publicPlaylist => (
+                        <PlaylistCard
+                            avatar={{uri: publicPlaylist["avatar"]}}
+                            name={publicPlaylist["playlistName"]}
+                            key={publicPlaylist["_id"]}
+                        />
+                    ))}
+                </ScrollView>
                 <Text className="text-white text-3xl">
                     Most Liked
                 </Text>
-                <SafeAreaView>
-                    <ScrollView horizontal={true} className="pl-0">
-                        {sortLikeDescendPlaylistArr.map(publicPlaylist => (
-                            <PlaylistCard
-                                avatar={{uri: publicPlaylist["avatar"]}}
-                                name={publicPlaylist["playlistName"]}
-                                key={publicPlaylist["_id"]}
-                            />
-                        ))}
-                    </ScrollView>
-                </SafeAreaView>
-            </View>
+                <ScrollView horizontal={true} className="pl-0">
+                    {sortLikeDescendPlaylistArr.map(publicPlaylist => (
+                        <PlaylistCard
+                            avatar={{uri: publicPlaylist["avatar"]}}
+                            name={publicPlaylist["playlistName"]}
+                            key={publicPlaylist["_id"]}
+                        />
+                    ))}
+                </ScrollView>
+                <Text className="text-white text-3xl">
+                    All Playlist
+                </Text>
+                <ScrollView horizontal={true} className="pl-0 mb-16">
+                    {allPublicPlaylist.map(publicPlaylist => (
+                        <PlaylistCard
+                            avatar={{uri: publicPlaylist["avatar"]}}
+                            name={publicPlaylist["playlistName"]}
+                            key={publicPlaylist["_id"]}
+                        />
+                    ))}
+                </ScrollView>
+            </ScrollView>
         </View>
     );
 }
