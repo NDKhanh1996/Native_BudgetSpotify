@@ -11,6 +11,7 @@ export function AuthButton(props) {
             justifyContent: "center",
             borderColor: props.borderColor || null,
             borderWidth: props.border || 0,
+            borderRadius: 120
         },
         buttonText: {
             color: props.textColor || "white",
@@ -18,7 +19,7 @@ export function AuthButton(props) {
     });
 
     return (
-        <TouchableOpacity style={[styles.button, {borderRadius: 120}]} onPress={props.onPress}>
+        <TouchableOpacity style={styles.button} onPress={props.onPress}>
             {props.icon ? (
                 <View className="flex-row">
                     <View className="absolute">

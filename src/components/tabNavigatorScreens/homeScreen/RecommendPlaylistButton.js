@@ -1,12 +1,12 @@
-import {StyleSheet, Text, TouchableOpacity, Image, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, Image} from "react-native";
 
 export function RecommendPlaylistButton(props) {
     return (
         <TouchableOpacity style={styles.button}>
             {props.img && (
-                <Image source={props.img} style={styles.image} />
+                <Image source={props.img} style={styles.image}/>
             )}
-            <Text style={styles.buttonText}>{props.title} </Text>
+            <Text style={styles.buttonText}>{props.title}</Text>
         </TouchableOpacity>
     );
 }

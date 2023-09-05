@@ -1,15 +1,47 @@
 import {HomeNavbar} from "../../components/tabNavigatorScreens/homeScreen/HomeNavbar";
 import {CategoriesButton} from "../../components/tabNavigatorScreens/homeScreen/CategoriesButton";
-import {View, Text} from "react-native";
+import {SafeAreaView, ScrollView, Text, View} from "react-native";
 import {RecommendPlaylistButton} from "../../components/tabNavigatorScreens/homeScreen/RecommendPlaylistButton";
 import {useEffect, useState} from "react";
 import UserService from "../../services/user.service";
 import SongService from "../../services/song.service";
+import {PlaylistCard} from "../../components/tabNavigatorScreens/homeScreen/PlaylistCard";
 
 export function Home() {
     const [yourPlaylist, setYourPlaylist] = useState([]);
     const [allPublicPlaylist, setAllPublicPlaylist] = useState([]);
     const [bestPlaylist, setBestPlaylist] = useState(null);
+    const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([])
+
+    const getAllPublicPlaylist = async () => {
+        const responseAllPlaylistPublic = await SongService.getAllPlaylistPublic();
+        const allPlaylistPublicData = responseAllPlaylistPublic.data["allPlaylistPublic"];
+        if (allPlaylistPublicData) {
+            setAllPublicPlaylist(allPlaylistPublicData);
+        }
+        return allPlaylistPublicData;
+    }
+
+    const getBestPlaylist = (allPlaylistPublicData) => {
+        let bestPlaylistVar = null;
+        for (let i = 0; i < allPlaylistPublicData.length; i++) {
+            const playlist = allPlaylistPublicData[i];
+
+            if (!bestPlaylistVar || playlist["playlistLikeCounts"].length > bestPlaylistVar["playlistLikeCounts"].length) {
+                bestPlaylistVar = playlist;
+            }
+        }
+
+        if (bestPlaylistVar) {
+            setBestPlaylist(bestPlaylistVar)
+        }
+    }
+    
+    const sortLikeDescendPlaylist = (allPlaylistPublicData) => {
+        return allPlaylistPublicData.sort((a, b) => {
+            return b["playlistLikeCounts"].length - a["playlistLikeCounts"].length;
+        });
+    }
 
     useEffect(() => {
         (async () => {
@@ -17,42 +49,31 @@ export function Home() {
                 const responsePlaylist = await UserService.getPlaylist();
                 setYourPlaylist(responsePlaylist.data.data);
 
-                const responseAllPlaylistPublic = await SongService.getAllPlaylistPublic();
-                const allPlaylistPublicData = responseAllPlaylistPublic.data["allPlaylistPublic"];
-                if (allPlaylistPublicData) {
-                    setAllPublicPlaylist(allPlaylistPublicData);
-                }
+                const allPlaylistPublicData = await getAllPublicPlaylist();
 
-                let bestPlaylistVar = null;
-                for (let i = 0; i < allPlaylistPublicData.length; i++) {
-                    const playlist = allPlaylistPublicData[i];
+                getBestPlaylist(allPlaylistPublicData);
 
-                    if (!bestPlaylistVar || playlist["playlistLikeCounts"].length > bestPlaylistVar["playlistLikeCounts"].length) {
-                        bestPlaylistVar = playlist;
-                    }
-                }
-
-                if (bestPlaylistVar) {
-                    setBestPlaylist(bestPlaylistVar)
-                }
+                const sortedPlaylist = sortLikeDescendPlaylist(allPlaylistPublicData);
+                setSortLikeDescendPlaylistArr(sortedPlaylist);
             } catch (e) {
                 console.log(e.message);
             }
         })();
     }, []);
+    console.log(sortLikeDescendPlaylistArr)
 
     return (
-        <View className="flex-1">
+        <View className="flex-1 pl-3">
             <HomeNavbar/>
-            <View className="flex-row space-x-3 ml-3 mt-7">
+            <View className="flex-row space-x-3 mt-7">
                 <View>
                     <CategoriesButton title="Songs"/>
                 </View>
                 <View>
-                    <CategoriesButton title="Playlists"/>
+                    <CategoriesButton title="Podcast"/>
                 </View>
             </View>
-            <View className="flex-row space-x-5 ml-3 mt-7">
+            <View className="flex-row space-x-5 mt-7">
                 <View>
                     <RecommendPlaylistButton
                         title="Liked songs"
@@ -76,13 +97,36 @@ export function Home() {
                     </View>
                 )}
             </View>
-            <Text className="text-white text-3xl ml-2.5 mt-7">
-                Your Playlist
-            </Text>
-
-            <Text className="text-white text-3xl ml-2.5 mt-7">
-                Most Liked
-            </Text>
+            <View className="flex space-y-8 mt-8">
+                <Text className="text-white text-3xl">
+                    Your Playlist
+                </Text>
+                <SafeAreaView>
+                    <ScrollView horizontal={true} className="pl-0">
+                        {allPublicPlaylist.map(publicPlaylist => (
+                            <PlaylistCard
+                                avatar={{uri: publicPlaylist["avatar"]}}
+                                name={publicPlaylist["playlistName"]}
+                                key={publicPlaylist["_id"]}
+                            />
+                        ))}
+                    </ScrollView>
+                </SafeAreaView>
+                <Text className="text-white text-3xl">
+                    Most Liked
+                </Text>
+                <SafeAreaView>
+                    <ScrollView horizontal={true} className="pl-0">
+                        {sortLikeDescendPlaylistArr.map(publicPlaylist => (
+                            <PlaylistCard
+                                avatar={{uri: publicPlaylist["avatar"]}}
+                                name={publicPlaylist["playlistName"]}
+                                key={publicPlaylist["_id"]}
+                            />
+                        ))}
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         </View>
     );
 }

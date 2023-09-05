@@ -14,12 +14,12 @@ export function HomeNavbar() {
     }, []);
 
     return (
-        <View className="justify-end h-16 pl-2.5">
+        <View className="justify-end h-16 pr-2">
             <View className="flex-row">
                 <Text className="text-white text-2xl md:text-3xl">
                     Hello {userInfo["firstName"]}
                 </Text>
-                <View className="flex-1 flex-row justify-end space-x-3 mr-2">
+                <View className="flex-1 flex-row justify-end space-x-3">
                     <TouchableOpacity>
                         <Fontisto name="bell" size={30} color="#fff"/>
                     </TouchableOpacity>
