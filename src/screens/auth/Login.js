@@ -1,5 +1,4 @@
-import {View, Text, TextInput} from "react-native";
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {Keyboard, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import {AuthButton} from "../../components/authScreens/AuthButton";
 import {useState} from "react";
 import {PasswordInput} from "../../components/authScreens/PasswordInput";
@@ -14,12 +13,12 @@ export function Login({navigation}) {
     const handleLogin = async () => {
         try {
             const response = await AuthService.jwtLogin({username, password});
-            navigation.navigate("TabNavigator");
             await AsyncStorage.setItem("token", response.data.accessToken);
             await AsyncStorage.setItem("refreshToken", response.data.refreshToken);
             const userObject = response.data.user;
             const userString = JSON.stringify(userObject);
             await AsyncStorage.setItem("userLogin", userString);
+            navigation.navigate("TabNavigator");
         } catch (e) {
             console.log(e)
             setWrongInfo(true);
