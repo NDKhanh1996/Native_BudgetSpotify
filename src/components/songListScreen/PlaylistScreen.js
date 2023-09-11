@@ -1,4 +1,4 @@
-import {Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useEffect, useState} from "react";
 import {useRoute} from "@react-navigation/native";
 import SongService from "../../services/song.service";
@@ -36,7 +36,7 @@ export function PlaylistScreen() {
                        {playlistInfo["playlistLikeCounts"] ? playlistInfo["playlistLikeCounts"].length : 0} likes
                    </Text>
                </View>
-                <View className="space-y-3 mt-9">
+                <ScrollView className="space-y-3 mt-9">
                     {playlistInfo?.songs &&
                         playlistInfo.songs.map(song => {
                                 return (
@@ -48,7 +48,7 @@ export function PlaylistScreen() {
                             }
                         )
                     }
-                </View>
+                </ScrollView>
             </View>
         </>
     );
