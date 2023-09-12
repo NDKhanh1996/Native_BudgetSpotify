@@ -13,8 +13,14 @@ axiosInstance.interceptors.request.use(
         if (accessToken) {
             const decodedToken = jwtDecode(accessToken);
             const now = Date.now() / 1000;
+            let tokens;
             if (decodedToken.exp < now) {
-                const tokens = await AuthService.reqRefreshToken(accessToken, refreshToken);
+                try {
+                    tokens = await AuthService.reqRefreshToken(accessToken, refreshToken);
+                } catch (e) {
+                    console.log(e);
+                    await AsyncStorage.clear();
+                }
                 await AsyncStorage.setItem("token", tokens.data.accessToken);
                 await AsyncStorage.setItem("refreshToken", tokens.data.refreshToken);
             }

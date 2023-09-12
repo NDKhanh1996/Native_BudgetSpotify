@@ -18,7 +18,10 @@ export function Login({navigation}) {
             const userObject = response.data.user;
             const userString = JSON.stringify(userObject);
             await AsyncStorage.setItem("userLogin", userString);
-            navigation.navigate("TabNavigator");
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'TabNavigator' }],
+            });
         } catch (e) {
             console.log(e)
             setWrongInfo(true);

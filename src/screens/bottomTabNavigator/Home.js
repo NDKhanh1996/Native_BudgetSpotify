@@ -47,6 +47,7 @@ export function Home({navigation}) {
                 const sortedPlaylist = sortLikeDescendPlaylist(allPlaylistPublicData);
                 setSortLikeDescendPlaylistArr(sortedPlaylist);
             } catch (e) {
+                navigation.navigate("AuthMain");
                 console.log(e.message);
             }
         })();
