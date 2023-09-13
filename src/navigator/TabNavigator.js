@@ -1,4 +1,4 @@
-import {TouchableOpacity, View, Text} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {Home} from "../screens/bottomTabNavigator/Home";
@@ -21,26 +21,21 @@ export function TabNavigator() {
                 headerShown: false,
             }}
         >
-            <Tab.Screen name="Home" component={Home}
-                        options={{tabBarIcon: ({color}) => (<FontAwesome name="home" size={30} color={color}/>)}}/>
-            <Tab.Screen name="Search" component={Search}
-                        options={{tabBarIcon: ({color}) => (<FontAwesome name="search" size={30} color={color}/>)}}/>
-            <Tab.Screen name="Library" component={Library} options={{
-                tabBarIcon: ({color}) => (<Ionicons name="library-sharp" size={30} color={color}/>)
-            }}/>
-            <Tab.Screen name="Premium" component={Premium}
-                        options={{tabBarIcon: ({color}) => (<FontAwesome name="dollar" size={30} color={color}/>)}}/>
+            <Tab.Screen name="Home" component={Home}/>
+            <Tab.Screen name="Search" component={Search}/>
+            <Tab.Screen name="Library" component={Library}/>
+            <Tab.Screen name="Premium" component={Premium}/>
         </Tab.Navigator>
     );
 }
 
-function MyTabBar({ state, descriptors, navigation }) {
+function MyTabBar({state, descriptors, navigation}) {
     return (
-        <View className="absolute bottom-0">
+        <View className="absolute bottom-0 border-transparent">
             <PlayBar className="relative"/>
-            <View className="relative flex-row bg-gray-900, w-screen">
+            <View className="relative flex-row w-screen bg-neutral-900/90">
                 {state.routes.map((route, index) => {
-                    const { options } = descriptors[route.key];
+                    const {options} = descriptors[route.key];
                     const label =
                         options.tabBarLabel !== undefined
                             ? options.tabBarLabel
@@ -68,17 +63,26 @@ function MyTabBar({ state, descriptors, navigation }) {
                         });
                     };
 
+                    const icon = [
+                        <FontAwesome name="home" size={30} color={"white"} style={{color: isFocused ? 'white' : 'grey'}}/>,
+                        <FontAwesome name="search" size={30} color={"white"} style={{color: isFocused ? 'white' : 'grey'}}/>,
+                        <Ionicons name="library-sharp" size={30} color={"white"} style={{color: isFocused ? 'white' : 'grey'}}/>,
+                        <FontAwesome name="dollar" size={30} color={"white"} style={{color: isFocused ? 'white' : 'grey'}}/>
+                    ]
+
                     return (
                         <TouchableOpacity
+                            key={index}
                             accessibilityRole="button"
-                            accessibilityState={isFocused ? { selected: true } : {}}
+                            accessibilityState={isFocused ? {selected: true} : {}}
                             accessibilityLabel={options.tabBarAccessibilityLabel}
                             testID={options.tabBarTestID}
                             onPress={onPress}
                             onLongPress={onLongPress}
                             className="flex-1 justify-center, items-center"
                         >
-                            <Text style={{ color: isFocused ? 'white' : 'grey' }}>
+                            {icon[index]}
+                            <Text style={{color: isFocused ? 'white' : 'grey'}}>
                                 {label}
                             </Text>
                         </TouchableOpacity>
