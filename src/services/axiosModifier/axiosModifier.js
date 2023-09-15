@@ -17,12 +17,12 @@ axiosInstance.interceptors.request.use(
             if (decodedToken.exp < now) {
                 try {
                     tokens = await AuthService.reqRefreshToken(accessToken, refreshToken);
+                    await AsyncStorage.setItem("token", tokens.data.accessToken);
+                    await AsyncStorage.setItem("refreshToken", tokens.data.refreshToken);
                 } catch (e) {
                     console.log(e);
                     await AsyncStorage.clear();
                 }
-                await AsyncStorage.setItem("token", tokens.data.accessToken);
-                await AsyncStorage.setItem("refreshToken", tokens.data.refreshToken);
             }
         }
 
