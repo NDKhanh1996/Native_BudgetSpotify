@@ -5,19 +5,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useEffect, useState} from "react";
 
 export function HomeNavbar() {
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            setUserInfo(JSON.parse(await AsyncStorage.getItem("userLogin")));
-        })();
+        AsyncStorage.getItem("userLogin")
+            .then(result => {
+                const data = JSON.parse(result);
+                setUserInfo(data);
+            })
+            .catch(e => {
+                console.log(e)
+            })
     }, []);
 
     return (
         <View className="justify-end h-16 pr-2">
             <View className="flex-row">
                 <Text className="text-white text-2xl md:text-3xl">
-                    Hello {userInfo["firstName"]}
+                    Hello {userInfo?.firstName}
                 </Text>
                 <View className="flex-1 flex-row justify-end space-x-3">
                     <TouchableOpacity>

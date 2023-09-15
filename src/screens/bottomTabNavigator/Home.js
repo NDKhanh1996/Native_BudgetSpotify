@@ -6,11 +6,16 @@ import {useEffect, useState} from "react";
 import UserService from "../../services/user.service";
 import SongService from "../../services/song.service";
 import {PlaylistCard} from "../../components/tabNavigatorScreens/homeScreen/PlaylistCard";
+import {PlaylistScreen} from "../../components/songListScreen/PlaylistScreen";
 
-export function Home() {
+export function Home({navigation}) {
     const [yourPlaylist, setYourPlaylist] = useState([]);
     const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([]);
     const [allPublicPlaylist, setAllPublicPlaylist] = useState([]);
+
+    const navigateToPlaylistScreen = (data) => {
+        navigation.navigate("PlaylistScreen", {data: data});
+    }
 
     const getAllPublicPlaylist = async () => {
         const responseAllPlaylistPublic = await SongService.getAllPlaylistPublic();
@@ -42,6 +47,7 @@ export function Home() {
                 const sortedPlaylist = sortLikeDescendPlaylist(allPlaylistPublicData);
                 setSortLikeDescendPlaylistArr(sortedPlaylist);
             } catch (e) {
+                navigation.navigate("AuthMain");
                 console.log(e.message);
             }
         })();
@@ -92,6 +98,7 @@ export function Home() {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
+                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
@@ -104,6 +111,7 @@ export function Home() {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
+                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
@@ -116,6 +124,7 @@ export function Home() {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
+                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
