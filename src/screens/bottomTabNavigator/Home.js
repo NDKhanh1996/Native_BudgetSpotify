@@ -13,8 +13,8 @@ export function Home({navigation}) {
     const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([]);
     const [allPublicPlaylist, setAllPublicPlaylist] = useState([]);
 
-    const navigateToPlaylistScreen = (data) => {
-        navigation.navigate("PlaylistScreen", {data: data});
+    const navigateToPlaylistScreen = (id) => {
+        navigation.navigate("PlaylistScreen", {entity: "playlist", id: id});
     }
 
     const getAllPublicPlaylist = async () => {
@@ -98,7 +98,7 @@ export function Home({navigation}) {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
-                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
+                            onPress={() => (navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
@@ -111,7 +111,7 @@ export function Home({navigation}) {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
-                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
+                            onPress={() => (navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
@@ -124,7 +124,7 @@ export function Home({navigation}) {
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
                             key={publicPlaylist["_id"]}
-                            onPress={()=>(navigateToPlaylistScreen(publicPlaylist["_id"]))}
+                            onPress={() => (navigateToPlaylistScreen(publicPlaylist["_id"]))}
                         />
                     ))}
                 </ScrollView>
