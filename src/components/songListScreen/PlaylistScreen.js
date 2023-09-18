@@ -52,7 +52,7 @@ export function PlaylistScreen() {
                 </ScrollView>
             </View>
             <View className="absolute bottom-0 border-transparent w-screen">
-                <PlayBar className="relative" id={id} entity={entity}/>
+                <PlayBar id={id} entity={entity}/>
             </View>
         </>
     );

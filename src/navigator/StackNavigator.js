@@ -8,8 +8,6 @@ import {useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {OpenScreen} from "../components/openScreen/OpenScreen";
 import {PlaylistScreen} from "../components/songListScreen/PlaylistScreen";
-import {PlayBar} from "../components/playBar/PlayBar";
-import {View} from "react-native";
 
 const Stack = createNativeStackNavigator();
 
