@@ -12,7 +12,6 @@ export function Home({navigation}) {
     const [yourPlaylist, setYourPlaylist] = useState(null);
     const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState(null);
     const [allPublicPlaylist, setAllPublicPlaylist] = useState(null);
-    console.log(allPublicPlaylist)
 
     const navigateToPlaylistScreen = (id) => {
         navigation.navigate("PlaylistScreen", {entity: "playlist", id: id});
