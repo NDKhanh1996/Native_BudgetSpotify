@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     listSong: [],
-    currentSong: {}
+    currentSong: null,
 }
 
 const songQueueSlice = createSlice({
