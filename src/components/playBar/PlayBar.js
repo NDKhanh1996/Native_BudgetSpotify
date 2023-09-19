@@ -1,6 +1,6 @@
 import {View, TouchableOpacity, Image, Text} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {Audio} from 'expo-av';
 import SongService from "../../services/song.service";
 import {useDispatch, useSelector} from 'react-redux'
@@ -40,7 +40,7 @@ export function PlayBar({id, entity}) {
                 const status = await soundObject.getStatusAsync();
                 if (!status.isLoaded) {
                     const song = songArray[songIndex];
-                    await soundObject.loadAsync({ uri: song["fileURL"] });
+                    await soundObject.loadAsync({uri: song["fileURL"]});
                     dispatch(setCurrentSong(song));
                 }
                 await soundObject.playAsync();
@@ -48,7 +48,6 @@ export function PlayBar({id, entity}) {
                 console.log(error);
             }
         } else {
-            console.log("out of list song")
             setIsPlaying(false);
         }
     }

@@ -9,9 +9,10 @@ import {PlaylistCard} from "../../components/tabNavigatorScreens/homeScreen/Play
 import {PlaylistScreen} from "../../components/songListScreen/PlaylistScreen";
 
 export function Home({navigation}) {
-    const [yourPlaylist, setYourPlaylist] = useState([]);
-    const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState([]);
-    const [allPublicPlaylist, setAllPublicPlaylist] = useState([]);
+    const [yourPlaylist, setYourPlaylist] = useState(null);
+    const [sortLikeDescendPlaylistArr, setSortLikeDescendPlaylistArr] = useState(null);
+    const [allPublicPlaylist, setAllPublicPlaylist] = useState(null);
+    console.log(allPublicPlaylist)
 
     const navigateToPlaylistScreen = (id) => {
         navigation.navigate("PlaylistScreen", {entity: "playlist", id: id});
@@ -71,7 +72,7 @@ export function Home({navigation}) {
                         img={require('../../../assets/img/likedPlaylistImg.jpg')}
                     />
                 </View>
-                {yourPlaylist.length > 0 && (
+                {yourPlaylist?.length > 0 && (
                     <View className="hidden sm:flex">
                         <RecommendPlaylistButton
                             title="Your newest playlist"
@@ -79,7 +80,7 @@ export function Home({navigation}) {
                         />
                     </View>
                 )}
-                {sortLikeDescendPlaylistArr.length > 0 && (
+                {sortLikeDescendPlaylistArr?.length > 0 && (
                     <View>
                         <RecommendPlaylistButton
                             title="Best playlist"
@@ -92,8 +93,8 @@ export function Home({navigation}) {
                 <Text className="text-white text-3xl">
                     Your Playlist
                 </Text>
-                <ScrollView horizontal={true} className="pl-0">
-                    {yourPlaylist.map(publicPlaylist => (
+                <ScrollView horizontal={true}>
+                    {yourPlaylist?.map(publicPlaylist => (
                         <PlaylistCard
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
@@ -105,8 +106,8 @@ export function Home({navigation}) {
                 <Text className="text-white text-3xl">
                     Most Liked
                 </Text>
-                <ScrollView horizontal={true} className="pl-0">
-                    {sortLikeDescendPlaylistArr.map(publicPlaylist => (
+                <ScrollView horizontal={true}>
+                    {sortLikeDescendPlaylistArr?.map(publicPlaylist => (
                         <PlaylistCard
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}
@@ -118,8 +119,8 @@ export function Home({navigation}) {
                 <Text className="text-white text-3xl">
                     All Playlist
                 </Text>
-                <ScrollView horizontal={true} className="pl-0 mb-16">
-                    {allPublicPlaylist.map(publicPlaylist => (
+                <ScrollView horizontal={true} className="mb-16">
+                    {allPublicPlaylist?.map(publicPlaylist => (
                         <PlaylistCard
                             avatar={{uri: publicPlaylist["avatar"]}}
                             name={publicPlaylist["playlistName"]}

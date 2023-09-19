@@ -10,7 +10,16 @@ const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 export function PlaylistScreen() {
     const route = useRoute();
     const {id, entity} = route.params;
-    const [playlistInfo, setPlaylistInfo] = useState({});
+    const [playlistInfo, setPlaylistInfo] = useState({
+        avatar: null,
+        description: null,
+        playlistLikeCounts: null,
+        playlistName: null,
+        songs: null,
+        uploadTime: null,
+        uploader: null,
+        _id: null
+    });
 
     useEffect(() => {
         SongService.getPlaylist(id)
@@ -18,7 +27,7 @@ export function PlaylistScreen() {
                 setPlaylistInfo(result.data["playlist"]);
             })
             .catch(e => {
-                console.log(e)
+                console.log(e);
             })
     }, []);
 
@@ -27,8 +36,9 @@ export function PlaylistScreen() {
             <Image source={{uri: playlistInfo.avatar}} style={styles.Banner}/>
             <View className="ml-3">
                 <View className="space-y-2 mt-5">
-                    <Text className="text-white font-bold">Upload
-                        at {playlistInfo["uploadTime"] && playlistInfo["uploadTime"].slice(0, 10)}</Text>
+                    <Text className="text-white font-bold">
+                        Upload at {playlistInfo["uploadTime"] && playlistInfo["uploadTime"].slice(0, 10)}
+                    </Text>
                     <View className="flex-row space-x-3">
                         <Entypo name="spotify" size={20} color="green"/>
                         <Text className="text-white font-extrabold">Spotify</Text>
@@ -38,10 +48,9 @@ export function PlaylistScreen() {
                     </Text>
                 </View>
                 <ScrollView className="space-y-3 mt-9">
-                    {playlistInfo?.songs &&
-                        playlistInfo.songs.map(song => {
+                    {playlistInfo.songs?.map(song => {
                                 return (
-                                    <TouchableOpacity key={song._id} className="flex-row">
+                                    <TouchableOpacity key={song["_id"]} className="flex-row">
                                         <Image source={{uri: song.avatar}} style={styles.songImage}/>
                                         <Text className="text-white self-center ml-3">{song["songName"]}</Text>
                                     </TouchableOpacity>
