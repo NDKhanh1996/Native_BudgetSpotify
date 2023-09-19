@@ -1,12 +1,16 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {StackNavigator} from "./src/navigator/StackNavigator";
 import {StatusBar} from 'react-native';
+import {Provider} from "react-redux";
+import {store} from "./src/redux/store";
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <StatusBar/>
-            <StackNavigator/>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <StatusBar/>
+                <StackNavigator/>
+            </NavigationContainer>
+        </Provider>
     );
 }
