@@ -5,13 +5,15 @@ import SongService from "../../services/song.service";
 import Entypo from "react-native-vector-icons/Entypo";
 import {PlayBar} from "../playBar/PlayBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setCurrentSong, setListSong} from "../../redux/feature/songQueueSlice";
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 export function PlaylistScreen() {
     const dispatch = useDispatch();
+    const songArray = useSelector(state => state.songQueue.listSong);
+    const currentSong = useSelector(state => state.songQueue.currentSong);
     const route = useRoute();
     const {id, entity} = route.params;
     const [playlistInfo, setPlaylistInfo] = useState({
@@ -37,7 +39,18 @@ export function PlaylistScreen() {
 
     const handleGetPlaylistToPlayBar = () => {
         dispatch(setListSong(playlistInfo["songs"]));
-        dispatch(setCurrentSong(playlistInfo["songs"][0]));
+        handleGetSongToPlayBar(playlistInfo["songs"][0]);
+    }
+
+    const handleGetSongToPlayBar = (song) => {
+        if (songArray.length === 0) {
+            dispatch(setListSong([song]));
+        } else {
+            const currentSongIndex = songArray.indexOf(currentSong);
+            const updatedSongArray = [...songArray.slice(0, currentSongIndex), song, ...songArray.slice(currentSongIndex + 1)];
+            dispatch(setListSong(updatedSongArray));
+        }
+        dispatch(setCurrentSong(song));
     }
 
     return (
@@ -67,7 +80,8 @@ export function PlaylistScreen() {
                 <ScrollView className="space-y-3 mt-9">
                     {playlistInfo.songs?.map(song => {
                             return (
-                                <TouchableOpacity key={song["_id"]} className="flex-row">
+                                <TouchableOpacity key={song["_id"]} className="flex-row"
+                                                  onPress={() => (handleGetSongToPlayBar(song))}>
                                     <Image source={{uri: song.avatar}} style={styles.songImage}/>
                                     <Text className="text-white self-center ml-3">{song["songName"]}</Text>
                                 </TouchableOpacity>
