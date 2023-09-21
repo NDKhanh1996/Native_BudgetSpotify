@@ -13,6 +13,7 @@ const Stack = createNativeStackNavigator();
 
 export function StackNavigator() {
     const navigation = useNavigation();
+
     useEffect(() => {
         (async () => {
             try {
