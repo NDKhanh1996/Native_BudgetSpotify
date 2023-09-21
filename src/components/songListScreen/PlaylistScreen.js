@@ -3,17 +3,16 @@ import {useEffect, useState} from "react";
 import {useRoute} from "@react-navigation/native";
 import SongService from "../../services/song.service";
 import Entypo from "react-native-vector-icons/Entypo";
-import {PlayBar} from "../playBar/PlayBar";
+import {PlayBar, soundObject} from "../playBar/PlayBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentSong, setListSong} from "../../redux/feature/songQueueSlice";
+import {setSongRunning} from "../../redux/feature/songStateSlice";
 
 const {width: windowWidth, height: windowHeight} = Dimensions.get('window');
 
 export function PlaylistScreen() {
     const dispatch = useDispatch();
-    const songArray = useSelector(state => state.songQueue.listSong);
-    const currentSong = useSelector(state => state.songQueue.currentSong);
     const route = useRoute();
     const {id, entity} = route.params;
     const [playlistInfo, setPlaylistInfo] = useState({
@@ -37,19 +36,15 @@ export function PlaylistScreen() {
             })
     }, []);
 
-    const handleGetPlaylistToPlayBar = () => {
+    const handleGetPlaylistToPlayBar = async () => {
+        await soundObject.unloadAsync();
+        dispatch(setSongRunning(false));
         dispatch(setListSong(playlistInfo["songs"]));
-        handleGetSongToPlayBar(playlistInfo["songs"][0]);
+        dispatch(setCurrentSong(playlistInfo["songs"][0]));
     }
 
     const handleGetSongToPlayBar = (song) => {
-        if (songArray.length === 0) {
-            dispatch(setListSong([song]));
-        } else {
-            const currentSongIndex = songArray.indexOf(currentSong);
-            const updatedSongArray = [...songArray.slice(0, currentSongIndex), song, ...songArray.slice(currentSongIndex + 1)];
-            dispatch(setListSong(updatedSongArray));
-        }
+        dispatch(setListSong([song]));
         dispatch(setCurrentSong(song));
     }
 

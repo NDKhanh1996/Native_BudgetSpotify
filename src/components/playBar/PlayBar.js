@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentSong} from "../../redux/feature/songQueueSlice";
 import {setSongRunning} from "../../redux/feature/songStateSlice";
 
-const soundObject = new Audio.Sound();
+export const soundObject = new Audio.Sound();
 let songIndex = 0;
 
 export function PlayBar({id, entity}) {
@@ -30,6 +30,7 @@ export function PlayBar({id, entity}) {
                 console.log(error);
             }
         } else {
+            console.log("out of song")
             dispatch(setSongRunning(false));
         }
     }
@@ -61,8 +62,11 @@ export function PlayBar({id, entity}) {
         if (hasMounted) {
             (async () => {
                 try {
-                    await soundObject.unloadAsync();
-                    dispatch(setSongRunning(false));
+                    if (songArray.length === 1) {
+                        await soundObject.unloadAsync();
+                        dispatch(setSongRunning(false));
+                        songIndex = 0;
+                    }
                 } catch (error) {
                     console.log(error);
                 }
