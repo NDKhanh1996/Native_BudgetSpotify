@@ -1,7 +1,6 @@
 import axios from "axios";
 import {API_URL} from '@env';
 
-
 class SongService {
     static async getPlaylist(playlistId) {
         return await axios.get(API_URL + `song/playlists/${playlistId}`);

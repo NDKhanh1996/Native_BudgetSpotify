@@ -5,7 +5,7 @@ import SongService from "../../services/song.service";
 import Entypo from "react-native-vector-icons/Entypo";
 import {PlayBar, soundObject} from "../playBar/PlayBar";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setCurrentSong, setListSong} from "../../redux/feature/songQueueSlice";
 import {setSongRunning} from "../../redux/feature/songStateSlice";
 
